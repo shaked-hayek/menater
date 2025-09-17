@@ -1,0 +1,6 @@
+[submodule "app/menater-app"]
+	path = app/menater-app
+	url = https://github.com/shaked-hayek/menater-app.git
+[submodule "app/menater-server"]
+	path = app/menater-server
+	url = https://github.com/shaked-hayek/menater-server.git
