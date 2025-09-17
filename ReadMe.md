@@ -109,7 +109,7 @@ Stop everything with:
 
 If the ArcGIS VM map is broken, reset to the latest working snapshot:
 ```powershell
-.\menater\map_reset.ps1
+.\menater\scripts\map_reset.ps1
 ```
 
 ## 4. Troubleshooting
