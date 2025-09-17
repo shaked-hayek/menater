@@ -72,22 +72,17 @@ git clone --recurse-submodules <main_repo_url>
 
 ### Python Setup
    ```powershell
-   cd baseFolder\menater\menater-server
-   python -m venv venv
-   .\venv\Scripts\activate
+   cd app/menater-server
    pip install -r requirements.txt
    ```
 
 ### React Setup
    ```powershell
-   cd baseFolder\menater\menater-app
+   cd app/menater-app
    npm install
-   ```
-   Optional:
-   ```powershell
    npm run build
+   npm install -g serve
    ```
-
 
 ## 3. Running the System
 Run:
