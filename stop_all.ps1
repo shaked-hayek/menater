@@ -25,3 +25,26 @@ try {
 } catch {
     Write-Host "Could not suspend VM: $($_.Exception.Message)"
 }
+
+# ===== Close all PowerShell windows including this one =====
+Write-Host "Closing all open PowerShell windows..."
+
+# Get all PowerShell processes
+$psProcesses = Get-Process -Name "powershell" -ErrorAction SilentlyContinue
+$pwsProcesses = Get-Process -Name "pwsh" -ErrorAction SilentlyContinue  # if you use PowerShell 7+
+
+# Kill them all except the current one
+foreach ($p in $psProcesses) {
+    if ($p.Id -ne $PID) {
+        Stop-Process -Id $p.Id -Force
+    }
+}
+
+foreach ($p in $pwsProcesses) {
+    if ($p.Id -ne $PID) {
+        Stop-Process -Id $p.Id -Force
+    }
+}
+
+# Finally, close this script's own shell
+Stop-Process -Id $PID -Force

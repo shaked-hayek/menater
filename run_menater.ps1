@@ -12,7 +12,7 @@ $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
 $flaskPath = Join-Path $scriptPath $flaskFolder
 $reactPath = Join-Path $scriptPath $reactFolder
 
-# ===== 1. Start VM =====
+# ===== Start VM =====
 Write-Host "Checking if VM is running..."
 $runningVMs = & "$vmrun" list
 
@@ -23,12 +23,7 @@ if ($runningVMs -notmatch [regex]::Escape($vmxPath)) {
     Write-Host "VM already running."
 }
 
-# ===== 2. Start React App =====
-Write-Host "Starting React app..."
-Stop-Process -Name "node" -Force -ErrorAction SilentlyContinue
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$reactPath'; serve -s build" -WindowStyle Minimized
-
-# ===== 3. Start MongoDB =====
+# ===== Start MongoDB =====
 Write-Host "Ensuring MongoDB service is running..."
 $mongoService = Get-Service -Name "MongoDB" -ErrorAction SilentlyContinue
 if ($mongoService -and $mongoService.Status -ne "Running") {
@@ -40,12 +35,17 @@ if ($mongoService -and $mongoService.Status -ne "Running") {
     Write-Host "MongoDB service not found! (Check if installed as service)"
 }
 
-# ===== 4. Start Flask Server =====
+# ===== Start Flask Server =====
 Write-Host "Starting Flask server..."
 Stop-Process -Name "python" -Force -ErrorAction SilentlyContinue
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$flaskPath'; python app.py" -WindowStyle Minimized
 
-# ===== 5. Open Browser ignoring SSL cert =====
+# ===== Start React App =====
+Write-Host "Starting React app..."
+Stop-Process -Name "node" -Force -ErrorAction SilentlyContinue
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$reactPath'; serve -s build" -WindowStyle Minimized
+
+# ===== Open Browser ignoring SSL cert =====
 Write-Host "Opening browser..."
 # Chrome
 $chromePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"
